@@ -1,40 +1,57 @@
-import {Schema, model} from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import { Schema, model } from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
-const teacherSchema = new Schema({
+const teacherSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        trime: true,
-        uppercase: true,
-
+      //nombre completo
+      type: String,
+      required: true,
+      trime: true,
+      uppercase: true,
     },
     departement: {
-        type: String,
+      //departamento al que pertenecen
+      type: String,
+      enum: ["SNA", "ARQ", "ISC", "IEM", "IBQ", "IGE", "LA", "CP", "CB"],
+      default: "SNA",
     },
 
     profilePicture: {
-        type: String,
+      //foto de perfil del profesor
+      type: String,
     },
     cv: {
-        type: String,
+      //CV del profesor
+      type: String,
     },
-
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        trim: true
+      //correo institucional del profesor
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
     },
-    labels: [{
-        type: String
-    }],
-    performance: {
+    labels: [
+      {
+        //etiquetas
         type: String,
-    },
+      },
+    ],
     scoreEvaluacionDocente: {
-        type: Number,
+      //evaluacion que obtuvieron los docentes en la evaluacion docente
+      type: Number,
+    },
+    performance: {
+      //rendimiento
+      type: String,
+      enum: ["Excelente", "Bueno", "Notable", "Suficiente", "Insuficiente"],
+    },
+    status: {
+      //activo o inactivo
+      type: Boolean,
+      default: true,
     },
 
     /*
@@ -49,16 +66,17 @@ const teacherSchema = new Schema({
             type: Date,
             default: Date.now()
         },
-
-
+        subject: {
+            type: String,
+            trim: true,
+            uppercase: true,
+        }
     }], */
-
-
-},
-{
+  },
+  {
     timestamps: true,
-    versionKey: false
-});
+    versionKey: false,
+  }
+);
 
-
-export default model('Teacher', teacherSchema);
+export default model("Teacher", teacherSchema);
